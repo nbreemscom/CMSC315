@@ -114,7 +114,13 @@ public class CustomArrayList<T> implements List<T> {
 
 	@Override
 	public void add(int index, T element) {
-		throw new java.lang.UnsupportedOperationException();
+		if (arraySize == listSize)
+			doubleArraySize();
+		
+		for (int i = listSize-1; i >= index; i--)
+			arr[i+1] = arr[i];
+		
+		arr[index] = element;
 	}
 
 	@Override
