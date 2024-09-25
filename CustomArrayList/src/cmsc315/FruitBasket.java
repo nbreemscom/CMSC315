@@ -14,6 +14,17 @@ public class FruitBasket {
 		x.add(2, "Cherry");
 		
 		System.out.println("How many items? " + x.size());
+		System.out.println("Does it have grapefruit? " + 
+				x.contains("Grapefruit"));
+		System.out.println("Does it contain Cherry? " + 
+				x.contains("Cherry"));
+		
+		System.out.println("--------------------------");
+
+		for (String s : x) {
+			System.out.println(s);
+		}
+		
 	}
 
 }

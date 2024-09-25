@@ -29,12 +29,12 @@ public class CustomArrayList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		throw new java.lang.UnsupportedOperationException();
+		return (indexOf(o) >= 0);
 	}
 
 	@Override
 	public Iterator<T> iterator() {
-		throw new java.lang.UnsupportedOperationException();
+		return new CustomArrayListIterator();
 	}
 
 	@Override
@@ -69,7 +69,17 @@ public class CustomArrayList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		throw new java.lang.UnsupportedOperationException();
+		T temp = (T)(o);
+		
+		for (int i = 0; i < listSize; i++) {
+			if (arr[i].equals(temp)) {
+				for (int j = i; j < listSize-1; j++)
+					arr[j] = arr[j+1];
+				listSize--;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -104,12 +114,20 @@ public class CustomArrayList<T> implements List<T> {
 
 	@Override
 	public T get(int index) {
-		throw new java.lang.UnsupportedOperationException();
+		if (index < 0 || index >= listSize)
+			throw new java.lang.IndexOutOfBoundsException();
+		
+		return arr[index];
 	}
 
 	@Override
 	public T set(int index, T element) {
-		throw new java.lang.UnsupportedOperationException();
+		if (index < 0 || index >= listSize)
+			throw new java.lang.IndexOutOfBoundsException();
+		
+		T temp = arr[index];
+		arr[index]= element;
+		return temp;
 	}
 
 	@Override
@@ -121,21 +139,40 @@ public class CustomArrayList<T> implements List<T> {
 			arr[i+1] = arr[i];
 		
 		arr[index] = element;
+		listSize++;
 	}
 
 	@Override
 	public T remove(int index) {
-		throw new java.lang.UnsupportedOperationException();
+		if (index < 0 || index >= listSize)
+			throw new java.lang.IndexOutOfBoundsException();
+		
+		T temp = arr[index];
+		for (int j = index; j < listSize-1; j++)
+			arr[j] = arr[j+1];
+		listSize--;
+		return temp;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		throw new java.lang.UnsupportedOperationException();
+		T temp = (T)(o);
+		for (int i = 0; i < listSize; i++) {
+			if (arr[i].equals(temp))
+				return i;
+		}
+		return -1;
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		throw new java.lang.UnsupportedOperationException();
+		T temp = (T)(o);
+		for (int i = listSize-1; i >= 0; i--) {
+			if (arr[i].equals(temp))
+				return i;
+		}
+		return -1;
+
 	}
 
 	@Override
@@ -153,4 +190,25 @@ public class CustomArrayList<T> implements List<T> {
 		throw new java.lang.UnsupportedOperationException();
 	}
 
+	class CustomArrayListIterator<T> implements Iterator<T> {
+		int index;
+		
+		public CustomArrayListIterator() {
+			index = 0;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return index < listSize;
+		}
+
+		@Override
+		public T next() {
+			T temp = (T)(arr[index]);
+			index++;
+			return temp;
+		}
+		
+		
+	}
 }
