@@ -6,7 +6,7 @@ public class FruitBasket {
 
 	public static void main(String[] args) {
 		
-		List<String> x = new CustomArrayList<String>();
+		List<String> x = new CustomLinkedList<String>();
 
 		x.add("Apple");
 		x.add("Banana");
