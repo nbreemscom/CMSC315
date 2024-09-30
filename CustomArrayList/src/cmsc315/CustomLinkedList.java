@@ -11,11 +11,17 @@ class Node<T> {
 	Node<T> prev;
 }
 
-public class CustomLinkedList<T> implements List<String> {
+public class CustomLinkedList<T> implements List<T> {
 
 	Node<T> head;
 	Node<T> tail;
 	int size;
+	
+	public CustomLinkedList() {
+		head = null;
+		tail = null;
+		size = 0;
+	}
 	
 	@Override
 	public int size() {
@@ -57,93 +63,178 @@ public class CustomLinkedList<T> implements List<String> {
 	}
 
 	@Override
-	public Iterator<String> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<T> iterator() {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
 	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean add(String e) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean add(T e) {
+		Node<T> temp = new Node<T>();
+		temp.element = e;
+		if (head == null) {
+			temp.next = null;
+			temp.prev = null;
+			head = temp;
+			tail = temp;
+		} else {
+			temp.next = null;
+			temp.prev = tail;
+			tail.next = temp;
+			tail = temp;
+		}
+		size++;
+		return true;
 	}
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+		Node<T> temp = getNode((T)(o));
+		if (temp == null) return false;
+		
+		if (temp.prev == null && temp.next == null) {
+			head = null;
+			tail = null;
+			size--;
+		} else if (temp.prev != null && temp.next == null) {
+			temp.prev.next = null;
+			tail = temp.prev;
+			size--;
+		} else if (temp.prev == null && temp.next != null) {
+			temp.next.prev = null;
+			head = temp.next;
+			size--;
+		} else {
+			temp.prev.next = temp.next;
+			temp.next.prev = temp.prev;
+			size--;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean containsAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends String> c) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addAll(Collection<? extends T> c) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends String> c) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addAll(int index, Collection<? extends T> c) {
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new java.lang.UnsupportedOperationException();
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-
+		size = 0;
+		head = null;
+		tail = null;
 	}
 
 	@Override
-	public String get(int index) {
-		// TODO Auto-generated method stub
-		return null;
+	public T get(int index) {
+		Node<T> cursor = head;
+		for (int i = 0; i < index; i++) {
+			if (cursor == null) {
+				throw new java.lang.IndexOutOfBoundsException();
+			}
+			cursor = cursor.next;
+		}
+		return cursor.element;
 	}
 
 	@Override
-	public String set(int index, String element) {
-		// TODO Auto-generated method stub
-		return null;
+	public T set(int index, T element) {
+		Node<T> cursor = head;
+		for (int i = 0; i < index; i++) {
+			if (cursor == null) 
+				throw new java.lang.IndexOutOfBoundsException();
+			cursor = cursor.next;
+		}
+		T temp = cursor.element;
+		cursor.element = element;
+		return temp;
 	}
 
 	@Override
-	public void add(int index, String element) {
-		// TODO Auto-generated method stub
-
+	public void add(int index, T element) {
+		if (size == 0) {
+			if (index > 0)
+				throw new java.lang.IndexOutOfBoundsException();
+			add(element);
+			return;
+		}
+		
+		if (index == size) { add(element); return; }
+		
+		Node<T> cursor = head;
+		for (int i = 0; i < index; i++) {
+			if (cursor == null)
+				throw new java.lang.IndexOutOfBoundsException();
+			cursor = cursor.next;
+		}
+		Node<T> temp = new Node<T>();
+		temp.element = element;
+		temp.next = cursor;
+		temp.prev = cursor.prev;
+		if (cursor.prev != null) {
+			cursor.prev.next = temp;
+		} else {
+			head = temp;
+		}
+		cursor.prev = temp;
+		size++;
 	}
 
 	@Override
-	public String remove(int index) {
-		// TODO Auto-generated method stub
-		return null;
+	public T remove(int index) {
+		Node<T> cursor = head;
+		for (int i = 0; i < index; i++) {
+			if (cursor == null) throw new java.lang.IndexOutOfBoundsException();
+			cursor = cursor.next;
+		}
+		
+		T temp = cursor.element;
+		if (cursor.prev == null && cursor.next == null) {
+			clear();
+		} else if (cursor.prev == null) {
+			// remove first item from list
+			cursor.next.prev = null;
+			head = cursor.next;
+			size--;
+		} else if (cursor.next == null) {
+			cursor.prev.next = null;
+			tail = cursor.prev;
+			size--;
+		} else {
+			// removing an item from the middle of list
+			cursor.prev.next = cursor.next;
+			cursor.next.prev = cursor.prev;
+			size--;
+		}
+		return temp;
 	}
 
 	@Override
@@ -159,19 +250,19 @@ public class CustomLinkedList<T> implements List<String> {
 	}
 
 	@Override
-	public ListIterator<String> listIterator() {
+	public ListIterator<T> listIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ListIterator<String> listIterator(int index) {
+	public ListIterator<T> listIterator(int index) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<String> subList(int fromIndex, int toIndex) {
+	public List<T> subList(int fromIndex, int toIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
