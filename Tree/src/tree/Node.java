@@ -59,7 +59,7 @@ public class Node<T> {
             return;
         }
  
-        String prev_str = "    ";
+        String prev_str = "   ";
         Trunk trunk = new Trunk(prev, prev_str);
  
         printTree(subRoot.right, trunk, true);
@@ -68,11 +68,11 @@ public class Node<T> {
             trunk.str = "———";
         }
         else if (isLeft) {
-            trunk.str = ",———";
+            trunk.str = "\u256d———";
             prev_str = "   |";
         }
         else {
-            trunk.str = "`———";
+            trunk.str = "\u2570———";
             prev.str = prev_str;
         }
  
