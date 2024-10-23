@@ -1,5 +1,8 @@
 package tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Tree<T> {
 
 	Node<T> root;
@@ -25,8 +28,42 @@ public class Tree<T> {
 		System.out.println("This tree has " + t.getNumNodes() + " nodes.");
 		System.out.println("The height of this tree is: " + t.root.getHeight());
 		t.printTree();
+		
+		t.preOrderTraversal();
+		t.inOrderTraversal();
+		t.postOrderTraversal();
+		t.breadthFirstTraversal();
+		
 	}
 
+	private void breadthFirstTraversal() {
+		Queue<Node<T>> q = new LinkedList<Node<T>>();
+		q.offer(root);
+		
+		while (!q.isEmpty()) {
+			Node<T> t = q.poll();
+			System.out.print(t.element + " ");
+			if (t.left != null)
+				q.offer(t.left);
+			if (t.right != null)
+				q.offer(t.right);
+		}
+	}
+
+	private void preOrderTraversal() {
+		root.preOrderTraversal();
+		System.out.println();
+	}
+	
+	private void inOrderTraversal() {
+		root.inOrderTraversal();
+		System.out.println();
+	}
+	private void postOrderTraversal() {
+		root.postOrderTraversal();
+		System.out.println();
+	}
+	
 	private int getNumLeaves() {
 		return root.getNumLeaves();
 	}

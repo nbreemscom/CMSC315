@@ -41,6 +41,27 @@ public class Node<T> {
 				);
 	}
 	
+	public boolean isTwoTree() {
+		if (left == null && right == null)
+			return true;
+		
+		if (left == null || right == null)
+			return false;
+		
+		return left.isTwoTree() && right.isTwoTree();
+	}
+	
+	public boolean isFullTree() {
+		if (left == null && right == null)
+			return true;
+		
+		if (left == null || right == null)
+			return false;
+		
+		return left.isFullTree() && right.isFullTree() && 
+				left.getHeight() == right.getHeight();
+	}
+	
 	public static void showTrunks(Trunk p)
     {
         if (p == null) {
@@ -86,6 +107,31 @@ public class Node<T> {
  
         printTree(subRoot.left, trunk, false);
     }
+
+	public void preOrderTraversal() {
+		System.out.print(element + " ");
+		if (left != null)
+			left.preOrderTraversal();
+		if (right != null)
+			right.preOrderTraversal();
+	}
+
+	public void inOrderTraversal() {
+		if (left != null)
+			left.inOrderTraversal();
+		System.out.print(element + " ");
+		if (right != null)
+			right.inOrderTraversal();
+	}
+	public void postOrderTraversal() {
+		if (left != null)
+			left.postOrderTraversal();
+		if (right != null)
+			right.postOrderTraversal();
+		System.out.print(element + " ");
+
+	}
+
 
 }
 
