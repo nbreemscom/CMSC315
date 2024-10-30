@@ -2,6 +2,7 @@ package tree;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 public class Tree<T extends Comparable<T>> {
 
@@ -14,16 +15,16 @@ public class Tree<T extends Comparable<T>> {
 	}
 	
 	public static void main(String[] args) {
-		Tree<String> t = new Tree<String>();
-
-		t.add("C");
-		t.add("A");
-		t.add("D");
-		t.add("B");
-		t.add("E");
+		Tree<Integer> t = new Tree<Integer>();
+		Random randGen = new Random();
+		
+		for (int i = 0; i < 25; i++) {
+			t.add(randGen.nextInt(100));
+		}
 		
 		System.out.println("This tree has " + t.getNumLeaves() + " leaves.");
 		System.out.println("This tree has " + t.getNumNodes() + " nodes.");
+		System.out.println("The recorded sized of the tree is: " + t.size);
 		System.out.println("The height of this tree is: " + t.root.getHeight());
 		t.printTree();
 		
@@ -31,6 +32,9 @@ public class Tree<T extends Comparable<T>> {
 		t.inOrderTraversal();
 		t.postOrderTraversal();
 		t.breadthFirstTraversal();
+		
+		System.out.println("Does it have a 14? " + t.contains(14));
+		System.out.println("Does it have a 15? " + t.contains(15));
 		
 	}
 
@@ -40,30 +44,41 @@ public class Tree<T extends Comparable<T>> {
 	}
 	
 	public boolean contains(T o) {
+		return getNode(o) != null;
+	}
+	
+	public Node<T> getNode(T o) {
 		if (root == null)
-			return false;
+			return null;
 		
 		Node<T> cursor = root;
 		while (true) {
 			int c = o.compareTo(cursor.element);
 			if (c == 0) 
-				return true;
+				return cursor;
 			else if (c < 0) { 
 				if (cursor.left != null) {
 					cursor = cursor.left;
 				} else {
-					return false;
+					return null;
 				}
 			} else { 
 				if (cursor.right != null) {
 					cursor = cursor.right;
 				} else {
-					return false;
+					return null;
 				}
 			}
 		}
 	}
 	
+	public boolean isEmpty() {
+		return root == null;
+	}
+	
+	public int size() {
+		return size;
+	}
 	
 	public boolean add(T o) {
 		if (root == null) {
@@ -99,6 +114,40 @@ public class Tree<T extends Comparable<T>> {
 				}
 			}
 		}	
+	}
+	
+	
+	
+	public boolean remove(T o) {
+		Node<T> x = getNode(o);
+		if (x == null) {
+			return false;
+		}
+		
+		if (x.left != null && x.right != null) {
+			// X has two children
+		} else if (x.left != null || x.right != null) {
+			// x has one child
+			
+		} else {
+			// X has no children
+			if (x.parent == null) {
+				// X is only node in tree
+				root = null;
+				size = 0;
+				return true;
+			}
+			
+			if (x == x.parent.left) {
+				x.parent.left = null;
+				size--;
+				return true;
+			} else {
+				x.parent.right = null;
+				size--;
+				return true;
+			}
+		}
 	}
 
 	private void breadthFirstTraversal() {
