@@ -56,7 +56,7 @@ public class Sorting {
 		int y[] = new int[x.length];
 		System.arraycopy(x, 0, y, 0, x.length);
 		
-		mergeSort(y, x, 0, x.length-1);
+		mergeSort(y, x, 0, x.length);
 	}
 	
 	public static void mergeSort(int[] src, int[] dest, int low, int high) {
@@ -83,7 +83,6 @@ public class Sorting {
 				q++;
 			}
 		}
-		
 	}
 	
 	
@@ -112,7 +111,11 @@ public class Sorting {
 		selectionSort(y);
 		printMyArray(y);
 
-		
+		System.arraycopy(x, 0, y, 0, x.length);
+		System.out.println("Merge sort");
+		mergeSort(y);
+		printMyArray(y);
+
 	}
 
 }
