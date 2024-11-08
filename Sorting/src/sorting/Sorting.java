@@ -52,6 +52,41 @@ public class Sorting {
 		}
 	}
 	
+	public static void mergeSort(int[] x) {
+		int y[] = new int[x.length];
+		System.arraycopy(x, 0, y, 0, x.length);
+		
+		mergeSort(y, x, 0, x.length-1);
+	}
+	
+	public static void mergeSort(int[] src, int[] dest, int low, int high) {
+		int length = high - low;
+		
+		if (length < 7) {
+			for (int i = low; i < high; i++) {
+				for (int j = i; j > low && dest[j-1] > dest[j]; j--) {
+					swap(dest, j, j-1);
+				}
+			}
+			return;
+		}
+		int mid = (low + high) >> 1; // Bitshift right by one, to divide by two fast!
+		mergeSort(dest, src, low, mid);
+		mergeSort(dest, src, mid, high);
+		
+		// Do the merge step
+		for (int i = low, p = low, q = mid; i < high; i++) {
+			if (q >= high ||  p < mid && src[p] <= src[q]) {
+				dest[i] = src[p++];
+			} else {
+				dest[i] = src[q];
+				q++;
+			}
+		}
+		
+	}
+	
+	
 	public static void main(String[] args) {
 		int x[] = new int[30];
 		int y[] = new int[30];
@@ -73,10 +108,11 @@ public class Sorting {
 		printMyArray(y);
 
 		System.arraycopy(x, 0, y, 0, x.length);
-		System.out.println("Bubble sort");
+		System.out.println("Selection sort");
 		selectionSort(y);
 		printMyArray(y);
 
+		
 	}
 
 }
