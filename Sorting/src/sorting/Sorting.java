@@ -85,6 +85,42 @@ public class Sorting {
 		}
 	}
 	
+	private static int median_of_three(int x[], int a, int b, int c) {
+		return (x[a] < x[b] ?
+				(x[b] < x[c] ? b : x[a] < x[c] ? c : a) :
+				(x[b] > x[c] ? b : x[a] > x[c] ? c : a));	
+	}
+	
+	public static void quickSort(int[] x) {
+		realQuickSort(x, 0, x.length);
+	}
+	
+	public static void realQuickSort(int[] x, int offset, int length) {
+		int 	first = offset, 
+				middle = offset + (length >> 1),
+				last = offset + length - 1;
+		
+		int pivot = median_of_three(x, first, middle, last);
+		int pivot_value = x[pivot];
+		
+		int		p = first,
+				q = last;
+		
+		while (true) {
+			while (p <= q && x[p] < pivot_value)
+				p++;
+			while (q >= p && x[q] > pivot_value)
+				q--;
+			if (p > q)
+				break;
+			swap(x, p++, q--);
+		}
+		if (q + 1 - offset > 1)
+			realQuickSort(x, offset, q + 1 - offset);
+		if (offset + length - p > 1)
+			realQuickSort(x, p, offset + length - p);
+	}
+	
 	
 	public static void main(String[] args) {
 		int x[] = new int[30];
@@ -115,6 +151,12 @@ public class Sorting {
 		System.out.println("Merge sort");
 		mergeSort(y);
 		printMyArray(y);
+
+		System.arraycopy(x, 0, y, 0, x.length);
+		System.out.println("Quick sort");
+		quickSort(y);
+		printMyArray(y);
+
 
 	}
 
