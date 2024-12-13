@@ -1,0 +1,41 @@
+Classroom Building
+West Hall
+Commons
+North Hall
+Gym
+Science Building
+East Hall
+East Campus Apartments
+BJ Haan Auditorium
+Campus Center
+Southview
+Covenant
+Kuiper Apartments
+***
+West Hall, North Hall, 30
+North Hall, East Hall, 30
+North Hall, Commons, 45
+East Hall, Commons, 40
+West Hall, Commons, 50
+Commons, Classroom Building, 45
+Commons, Science Building, 60
+Commons, Campus Center, 55
+West Hall, Classroom Building, 70
+West Hall, Science Building, 80
+East Hall, BJ Haan Auditorium, 85
+East Hall, Gym, 70
+Campus Center, BJ Haan Auditorium, 40
+Gym, BJ Haan Auditorium, 30
+Campus Center, Gym, 60
+Gym, East Campus Apartments, 90 
+East Campus Apartments, Southview, 40
+Southview, Gym, 70
+East Campus Apartments, Covenant, 50
+Southview, Covenant, 40
+Southview, Kuiper Apartments, 20
+Kuiper Apartments, BJ Haan Auditorium, 40
+Kuiper Apartments, Gym, 60
+Kuiper Apartments, Campus Center, 160
+Campus Center, Science Building, 20
+Science Building, Classroom Building, 30
+Covenant, Classroom Building, 220
